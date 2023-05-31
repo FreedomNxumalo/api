@@ -1,1 +1,51 @@
-# api
+Database
+ 
+CREATE DATABASE [RedPanda] 
+GO
+ 
+CREATE TABLE [dbo].[Customer]
+(
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[Surname] [varchar](50) NOT NULL,
+	[Address] [varchar](100) NOT NULL,
+	[DateCreated] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
+CREATE TABLE [dbo].[Order](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[CustomerId] [int] NULL,
+	[StockId] [int] NULL,
+	[DateCreated] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[Stock](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[StockNumber] [varchar](20) NULL,
+	[Description] [varchar](100) NULL,
+	[DateCreated] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Order]  WITH CHECK ADD FOREIGN KEY([CustomerId])
+REFERENCES [dbo].[Customer] ([Id])
+GO
+ALTER TABLE [dbo].[Order]  WITH CHECK ADD FOREIGN KEY([StockId])
+REFERENCES [dbo].[Stock] ([Id])
+GO
+ALTER DATABASE [RedPanda] SET  READ_WRITE 
+GO
